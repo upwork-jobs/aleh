@@ -1,0 +1,201 @@
+<?php
+/**
+ * The template for displaying Category pages
+ *
+ * Used to display archive-type pages for posts in a category.
+ *
+ * @link http://codex.wordpress.org/Template_Hierarchy
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twelve
+ * @since Twenty Twelve 1.0
+ */
+
+get_header(); ?>
+
+<?php $read_more = (ICL_LANGUAGE_CODE=='he') ? "קרא עוד...": "More";?>
+
+<div class="col-md-3 inner-page-content-left">
+ <?php get_template_part( 'inner-left-sidebar' ); ?>
+</div>
+
+<div class="col-md-9 inner-page-content-inner">
+<?php 
+$categories = get_the_category();
+$category_id = $categories[0]->cat_ID;
+//$category_id = $cat;
+$args = array(
+	'cat' => $category_id,
+	'orderby' => 'date',
+	'order' => 'DESC',
+	'date_query' => array(
+		array(
+			'year'  => date('Y')
+		),
+	),
+);
+$the_query = new WP_Query( $args ); 
+$allposts = $the_query->posts;
+$allposts = array_reverse($allposts);
+$current_category_link = get_category_link( $category_id );
+?>
+
+
+<?php 
+	if($categories[0]->slug=='programs-in-action' || $categories[0]->slug=='in-the-press' || $categories[0]->slug=='aleh-happenings'):
+
+ ?> 
+
+<?php if(!isset($_REQUEST['archive']) && $_REQUEST['archive']!='y'):?>
+			<header class="entry-header">
+				<h1 class="entry-title"><?php echo single_cat_title( '', false );?></h1> 
+			</header><!-- .archive-header -->
+		<?php if ( count($allposts)>0 ) : ?>
+			<?php foreach( $allposts as $eachpost ) { ?>
+            <?php
+				  $post = get_post($eachpost->ID);
+				  setup_postdata( $post );
+				  $_excerpt = get_the_excerpt();
+				  $_permalink = get_the_permalink();
+				  $_the_date = get_the_date( 'M d, Y', get_the_ID() );
+				  wp_reset_postdata();
+			?>
+                <div class="each-post">
+                	<div class="col-md-2">
+                    <?php if ( has_post_thumbnail($eachpost->ID) ) : ?>
+                    <a class="pull-left" href="<?php echo $_permalink; ?>">
+                    	<?php $img_attr = array('class'	=> "img-responsive																												");  echo get_the_post_thumbnail($eachpost->ID, 'thumb', $img_attr); ?>
+                 	 </a>
+					<?php else: ?>
+                            <img src="<?php home_url( '/wp-content/uploads/2014/05/no-photo.jpg' ); ?>" alt="" />
+                    <?php endif; ?>
+                  
+                  	</div>
+                	<div class="col-md-7"> <a  class="post-title" href="<?php echo $_permalink; ?>"><?php echo $eachpost->post_title; ?></a> <br /> <?php echo $_excerpt; ?><a href="<?php echo $_permalink; ?>"> <br /> More</a></div>
+                	<div class="col-md-2"><?php echo $_the_date;?></div>
+                   
+                	<div class="clearfix"></div>
+                </div>
+            <?php }//foreach ?>
+		<?php else : ?>
+			 No news records on file.
+		<?php endif; ?>
+        <div class="each-post text-center old-archives-link">
+            <a href="<?php echo $current_category_link; ?>?archive=y">
+                <?php echo single_cat_title( '', false );?> - archive
+            </a>        
+            <div class="clearfix"></div>
+        </div>
+<?php 
+//end if archive and archive!=y
+else:
+?>
+
+			<header class="entry-header">
+				<h1 class="entry-title"><?php echo single_cat_title( '', false );?> Archive</h1> 
+			</header><!-- .archive-header -->
+            
+            
+<?php  
+$currentyear=date('Y');
+
+for($year=$currentyear; $year>=2005;$year--){
+$args = array(
+	'cat' => $category_id,
+	'orderby' => 'post_date',
+	'order' => 'DESC',
+	'date_query' => array(
+		array(
+			'year'  => $year
+		),
+	),
+);
+$the_query = new WP_Query( $args ); 
+?>
+
+		<?php if ( $the_query->have_posts() ) : ?>
+				<h3 class="archive-year"><?php echo $year;?> Archive</h3>
+			<?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
+            	
+                
+                <div class="each-post-archive">
+                	<div class="col-md-9"> <a  class="post-title" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
+                	<div class="col-md-3 the-date"><?php the_date();?></div>
+                	<div class="clearfix"></div>
+                </div>
+            
+            <?php endwhile; ?> 
+		<?php endif; ?>
+        
+        
+<?php } ?>
+
+<?php 
+//end else if archive and archive==y
+endif; 
+?>
+
+
+<?php else:  
+
+$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+$args = array(
+	'cat' => $category_id,
+	'paged' => $paged,
+	'orderby' => 'modified',
+	'order' => 'DESC'
+);
+$the_query = new WP_Query( $args ); 
+?>
+			<header class="entry-header">
+				<h1 class="entry-title"><?php echo single_cat_title( '', false );?></h1> 
+			</header><!-- .archive-header -->
+		<?php if ( $the_query->have_posts() ) : ?>
+
+
+			<?php if(ICL_LANGUAGE_CODE=='he'):?>
+				<?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?> 
+                    <div class="each-post">
+                        <div class="col-md-2 the-date"><?php echo hebrewDate(get_the_date('Y F j')); ?></div>
+                        <div class="col-md-7"> <a  class="post-title" href="<?php the_permalink(); ?>"><?php the_title(); ?></a> <br /> <?php the_excerpt(); ?><a href="<?php the_permalink(); ?>"><?php echo $read_more?></a></div>
+                        <div class="col-md-2"><a class="pull-left" href="<?php the_permalink(); ?>">
+                        <?php $img_attr = array('class'	=> "img-responsive																												");  the_post_thumbnail('thumb', $img_attr); ?>
+                      </a></div>
+                	  <div class="clearfix"></div>
+                    </div> 
+                <?php endwhile; ?>
+                 <div class="pagination">
+                 <?php 
+				 	$big = 999999999; // need an unlikely integer
+					echo paginate_links( array(
+						'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+						'format' => '?paged=%#%',
+						'current' => max( 1, get_query_var('paged') ),
+						'total' => $wp_query->max_num_pages
+					) ); 
+				?> 
+                 </div>
+            <?php else : ?>
+				<?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?> 
+                    <div class="each-post">
+                        <div class="col-md-2"><a class="pull-left" href="<?php the_permalink(); ?>">
+                        <?php $img_attr = array('class'	=> "img-responsive																												");  the_post_thumbnail('thumb', $img_attr); ?>
+                      </a></div>
+                        <div class="col-md-7"> <a  class="post-title" href="<?php the_permalink(); ?>"><?php the_title(); ?></a> <br /> <?php the_excerpt(); ?><a href="<?php the_permalink(); ?>"><?php echo $read_more?></a></div>
+                        <div class="col-md-2"><?php the_date();?></div>
+                		<div class="clearfix"></div>
+                    </div> 
+                <?php endwhile; ?>
+            <?php endif; ?>
+
+		<?php else : ?>
+			 No news records on file.
+		<?php endif; ?>
+                
+
+<?php endif; ?>
+
+</div>
+
+
+<?php get_footer(); ?>

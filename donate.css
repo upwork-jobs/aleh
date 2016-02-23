@@ -1,0 +1,62 @@
+.donate-wrapper .container{
+	width:100%;
+	padding: 0 60px;
+}
+.donate-wrapper{
+	background:#fff;
+	width:950px;
+	margin:0 auto;
+}
+.header-top {
+    background: none repeat scroll 0 0 #fff;
+    height: 155px;
+    padding-top: 38px;
+}
+.donate-banner img {
+    margin-top: -35px;
+}
+.donate-form {
+    background: none repeat scroll 0 0 #f1f8f0;
+}
+.donate-secure{
+	background:#4093a1;
+	min-height:105px;
+}
+.secure-right{
+	padding:0px;
+}
+.secure-right img{
+	margin:25px 0 0 10px;
+	box-shadow: 5px 6px 4px #000;
+}
+.footer-bottom {
+    background: none repeat scroll 0 0 #9ccf3d;
+    min-height: 68px;
+}
+
+.donate-banner{
+	background: url("images/donate-banner.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    min-height: 344px;
+    position: relative;
+	color:#fff;
+}
+#DonatePageHeaderText{
+    bottom: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;	
+}
+#DonatePageHeaderText a{
+	color: #9ccf3d;
+}
+form[name='DonationForm'] {
+    margin-bottom: 30px;
+}
+.donate-form input, .donate-form button, .donate-form select, .donate-form textarea {
+	margin-bottom:5px;
+}
+
+.donate-footer .donate-form-footer-links a {
+    color: #333 !important;
+    margin: 0 5px;
+}
