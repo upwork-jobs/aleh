@@ -16,11 +16,12 @@ get_header();
 $catid = get_post_meta(get_the_ID(), 'choose_category', true);
 $read_more = (ICL_LANGUAGE_CODE=='he') ? "קרא עוד...": "More";
 ?>
-      <div class="col-xs-3 inner-page-content-left">
- 		<?php get_template_part( 'inner-left-sidebar' ); ?>
-     </div>
-	 <div class="col-xs-9 inner-page-content-inner">
-        <div class="dedication-area">
+
+<div class="col-xs-3 inner-page-content-left">
+  <?php get_template_part( 'inner-left-sidebar' ); ?>
+</div>
+<div class="col-xs-9 inner-page-content-inner">
+  <div class="dedication-area">
     <h1 class="entry-title"><?php echo get_the_category_by_id($catid);?></h1>
     <p><?php echo category_description($catid);?></p>
     <?php 
@@ -35,31 +36,35 @@ $read_more = (ICL_LANGUAGE_CODE=='he') ? "קרא עוד...": "More";
   
       );
       // The Query
-      $query = new WP_Query( $args );
+      $the_query = new WP_Query( $args );
+			$allposts = $the_query->posts;
       // The Loop
-      if ( $query->have_posts() ) {
-          while ( $query->have_posts() ) {
-              $query->the_post();
-			  $_permalink = get_the_permalink();
+      foreach( $allposts as $eachpost ) {
+              $post = get_post($eachpost->ID);
+              setup_postdata( $post );
+			  			$_permalink = get_the_permalink();
+              $_excerpt = get_the_excerpt();
   
   ?>
-    <div class="each-post a4">
-        <div class="col-xs-2"><a class="pull-left" href="<?php echo $_permalink; ?>">
-        <?php $img_attr = array('class'	=> "img-responsive																												");  echo get_the_post_thumbnail(get_the_ID(), 'thumb', $img_attr); ?>
-      </a></div>
-        <div class="col-xs-7"> <a  class="post-title" href="<?php echo $_permalink; ?>"><?php the_title(); ?></a> <br /> <?php the_excerpt(); ?><a href="<?php echo $_permalink; ?>"><?php echo $read_more?></a></div>
-        <div class="clearfix"></div>
+    <div class="each-post a4 bbb">
+      <div class="col-xs-2"><a class="pull-left" href="<?php echo $_permalink; ?>">
+        <?php $img_attr = array('class'	=> "img-responsive");  echo get_the_post_thumbnail(get_the_ID(), 'thumb', $img_attr); ?>
+        </a></div>
+      <div class="col-xs-7"> <a  class="post-title" href="<?php echo $_permalink; ?>">
+        <?php the_title(); ?>
+        </a>
+        <p><?php echo $_excerpt; ?></p>
+        <a href="<?php echo $_permalink; ?>"><?php echo $read_more?></a></div>
+      <div class="clearfix"></div>
     </div>
     <?php 
      }
       wp_reset_postdata();
-  }
   ?>
-    <script type="text/javascript">
+  <script type="text/javascript">
   $('#myModal').modal()
   </script>
     <?php //get_sidebar( 'front' ); ?>
   </div>
-        </div>
-    
+</div>
 <?php get_footer(); ?>

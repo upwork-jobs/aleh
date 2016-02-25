@@ -238,7 +238,7 @@ $allposts = $the_query->posts;
                       $post = get_post($eachpost->ID);
                       setup_postdata( $post );
                       $_excerpt = get_the_excerpt();
-				  	  $_title = get_the_title();
+				  	  				$_title = get_the_title();
                       $_permalink = get_the_permalink();
                       $_the_date = get_the_date( 'M d, Y', get_the_ID() );
                       wp_reset_postdata();

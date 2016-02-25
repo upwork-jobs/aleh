@@ -39,14 +39,14 @@
       </div>
       <div class="col-xs-12 col-md-5 footer-nav pt-40">
       	<div class="row">
-        	<div class="col-md-4 nav4 p-0">
+        	<div class="col-md-3 nav4 p-0">
           	<?php wp_nav_menu( array('theme_location' => 'footer-nav4'));?>
           </div>
         	<div class="col-md-4 nav5 p-0">
           	<?php wp_nav_menu( array('theme_location' => 'footer-nav5'));?>
           </div>
-        	<div class="col-md-4 nav6 p-0">
-          	<?php wp_nav_menu( array('theme_location' => 'footer-nav6'));?>
+        	<div class="col-md-5 nav6 p-0">
+          	<?php wp_nav_menu( array('theme_location' => 'footer-nav6', 'menu_class' => 'menu list-inline'));?>
           </div>
         </div>
       </div>

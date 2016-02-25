@@ -5,11 +5,11 @@
 
 <?php if($catid == 42):?>
 <ul class="list-inline list-with-vertical-divider">
-  <li><a href="#buildings">Buildings</a></li>
-  <li><a href="#equipment">Equipment</a></li>
-  <li><a href="#programs">Programs</a></li>
-  <li><a href="#training">Training</a></li>
-  <li><a href="#sponsorships">Sponsorships</a></li>
+  <li><a href="#buildings"><strong>Buildings</strong></a></li>
+  <li><a href="#equipment"><strong>Equipment</strong></a></li>
+  <li><a href="#programs"><strong>Programs</strong></a></li>
+  <li><a href="#training"><strong>Training</strong></a></li>
+  <li><a href="#sponsorships"><strong>Sponsorships</strong></a></li>
 </ul>
 <br>
 <?php else:?>
