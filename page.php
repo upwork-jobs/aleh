@@ -18,7 +18,7 @@ get_header(); ?>
 </div>
 
 <?php if(ICL_LANGUAGE_CODE=='en'):?>
-<div class="col-xs-7 inner-page-content-inner">
+<div class="col-xs-8 inner-page-content-inner">
 <?php elseif(ICL_LANGUAGE_CODE=='he'):?>
 <div class="col-xs-9 inner-page-content-inner">
 <?php endif;?>
